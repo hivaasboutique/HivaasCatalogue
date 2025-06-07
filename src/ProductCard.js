@@ -56,94 +56,108 @@ function ProductCard({ product, inWishlist, addToWishlist, removeFromWishlist })
     }
   };
 
-  return (
+return (
+  <div
+    style={{
+      border: "1px solid #e0d6cf",
+      padding: "1rem",
+      margin: "1rem",
+      width: "270px",
+      textAlign: "center",
+      position: "relative",
+      borderRadius: "12px",
+      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.08)",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+      backgroundColor: "#fff",
+      fontFamily: "sans-serif",
+      cursor: "default",
+      // Removed opacity and pointerEvents from here
+    }}
+    onMouseEnter={(e) => {
+      if (!isSoldOut) {
+        e.currentTarget.style.transform = "scale(1.02)";
+        e.currentTarget.style.boxShadow = "0 6px 15px rgba(0, 0, 0, 0.12)";
+      }
+    }}
+    onMouseLeave={(e) => {
+      if (!isSoldOut) {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.08)";
+      }
+    }}
+  >
+    {/* Image carousel remains fully interactive */}
+    {images.length > 0 ? (
+      <>
+        {/* Clickable image */}
+        <img
+          src={images[currentIndex]}
+          alt={product.description}
+          style={{
+            width: "100%",
+            height: "260px",  // Increased from 200px to 260px
+            objectFit: "cover",
+            cursor: "pointer",
+            borderRadius: "8px"
+          }}
+          onClick={() => setIsModalOpen(true)}
+        />
+
+        <div style={{ marginTop: "0.5rem", textAlign: "center" }}>
+          <button
+            onClick={goPrev}
+            style={{
+              backgroundColor: "#6e4c3b",
+              color: "white",
+              border: "none",
+              padding: "6px 12px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              marginRight: "10px",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
+          >
+            Prev
+          </button>
+          <span style={{ margin: "0 1rem" }}>
+            {currentIndex + 1} / {images.length}
+          </span>
+          <button
+            onClick={goNext}
+            style={{
+              backgroundColor: "#6e4c3b",
+              color: "white",
+              border: "none",
+              padding: "6px 12px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              marginLeft: "10px",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
+          >
+            Next
+          </button>
+        </div>
+      </>
+    ) : (
+      <p>No images available</p>
+    )}
+
+    {/* Wrap the rest of the product info and controls */}
     <div
       style={{
-        border: "1px solid #e0d6cf",
-        padding: "1rem",
-        margin: "1rem",
-        width: "270px",
-        textAlign: "center",
-        position: "relative",
-        borderRadius: "12px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.08)",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        backgroundColor: "#fff",
-        fontFamily: "sans-serif",
-        cursor: "default",
         opacity: isSoldOut ? 0.5 : 1,
         pointerEvents: isSoldOut ? "none" : "auto",
-      }}
-      onMouseEnter={(e) => {
-        if (!isSoldOut) {
-          e.currentTarget.style.transform = "scale(1.02)";
-          e.currentTarget.style.boxShadow = "0 6px 15px rgba(0, 0, 0, 0.12)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isSoldOut) {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.08)";
-        }
+        userSelect: isSoldOut ? "none" : "auto",
+        marginTop: "1rem",
       }}
     >
-
-      {images.length > 0 ? (
-        <>
-          {/* Clickable image */}
-          <img
-            src={images[currentIndex]}
-            alt={product.description}
-            style={{ width: "100%", height: "200px", objectFit: "cover", cursor: "pointer", borderRadius: "8px" }}
-            onClick={() => setIsModalOpen(true)}
-          />
-          <div style={{ marginTop: "0.5rem", textAlign: "center" }}>
-            <button
-              onClick={goPrev}
-              style={{
-                backgroundColor: "#6e4c3b",
-                color: "white",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold",
-                marginRight: "10px",
-                transition: "background-color 0.3s ease",
-              }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
-            >
-              Prev
-            </button>
-            <span style={{ margin: "0 1rem" }}>
-              {currentIndex + 1} / {images.length}
-            </span>
-            <button
-              onClick={goNext}
-              style={{
-                backgroundColor: "#6e4c3b",
-                color: "white",
-                border: "none",
-                padding: "6px 12px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold",
-                marginLeft: "10px",
-                transition: "background-color 0.3s ease",
-              }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
-            >
-              Next
-            </button>
-          </div>
-
-        </>
-      ) : (
-        <p>No images available</p>
-      )}
-
       <h3 style={{ fontSize: "1rem", marginTop: "0.8rem", color: "#3b2a1e" }}>{product.description}</h3>
       {isSoldOut && (
         <div
@@ -162,7 +176,6 @@ function ProductCard({ product, inWishlist, addToWishlist, removeFromWishlist })
       <p style={{ margin: "0.3rem 0", fontSize: "1rem" }}><strong>Price:</strong> ₹{product.price}</p>
       <p style={{ margin: "0.3rem 0", fontSize: "0.9rem" }}><strong>Product Type:</strong> {product.type}</p>
 
-
       {/* Size Selection */}
       <div style={{ marginTop: "0.4rem", textAlign: "left" }}>
         <strong>Select Sizes:</strong>
@@ -175,13 +188,13 @@ function ProductCard({ product, inWishlist, addToWishlist, removeFromWishlist })
               <label
                 key={size}
                 style={{
-                  padding: "6px 12px",
-                  borderRadius: "20px",
+                  padding: "4px 6px",              // Reduced padding
+                  borderRadius: "15px",            // Slightly smaller pill shape
                   border: isSelected ? "2px solid #6e4c3b" : "1px solid #ccc",
                   backgroundColor: isAvailable ? (isSelected ? "#6e4c3b" : "#f8f4f1") : "#eae0da",
                   color: isAvailable ? (isSelected ? "white" : "#3b2a1e") : "#a9a9a9",
                   cursor: isAvailable ? "pointer" : "not-allowed",
-                  fontSize: "0.9rem",
+                  fontSize: "0.8rem",             // Smaller font
                   userSelect: "none",
                   textDecoration: isAvailable ? "none" : "line-through"  
                 }}
@@ -267,8 +280,7 @@ function ProductCard({ product, inWishlist, addToWishlist, removeFromWishlist })
         )}
 
       </div>
-
-
+  </div>
 
       {/* Modal for full image */}
       {isModalOpen &&

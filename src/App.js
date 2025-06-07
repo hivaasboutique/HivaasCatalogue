@@ -40,34 +40,34 @@ function App() {
   return (
     <div className="App" style={{ padding: "1rem" }}>
       <img
-        src="/bannner.png"
+        src="/header.png"
         alt="Hivaas Banner"
         style={{ width: "100%", height: "auto", marginBottom: "1rem" }}
       />
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "1rem" }}>
         {/* Size Guide Toggle */}
-        <div
+        <button
           onClick={() => setShowSizeGuide(!showSizeGuide)}
           style={{
             display: "inline-block",
-            padding: "6px 12px",           // Smaller padding
-            backgroundColor: "#3b2a1e",
-            color: "white",
-            borderRadius: "5px",
-            cursor: "pointer",
-            userSelect: "none",
-            marginBottom: "1rem",
-            fontWeight: "bold",
-            textAlign: "center",
-            fontSize: "12px",              // Smaller font
-            fontStyle: "italic", 
+            padding: "4px 5px",
+            maxWidth: "100%", // optional
+            alignSelf: "flex-start",
+            color: "#5c4033",
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "0.9rem",
+            letterSpacing: "0.5px",
+            background: "#f3eee9",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            cursor: "pointer"
           }}
         >
           {showSizeGuide
             ? "Hide the size guide"
             : "Click here to view the size guide for your reference"}
-        </div>
-    
+        </button>
+
         {showSizeGuide && (
           <img
             src="/size_guide.png"
@@ -77,42 +77,46 @@ function App() {
         )}
 
         {/* How to Use the Catalog Toggle */}
-        <div
+        <button
           onClick={() => setShowCatalogHelp(!showCatalogHelp)}
           style={{
             display: "inline-block",
-            padding: "6px 12px",           // Smaller padding
-            backgroundColor: "#3b2a1e",
-            color: "white",
-            borderRadius: "5px",
-            cursor: "pointer",
-            userSelect: "none",
-            marginBottom: "1rem",
-            fontWeight: "bold",
-            textAlign: "center",
-            fontSize: "12px",              // Smaller font
-            fontStyle: "italic",
+            padding: "4px 5px",
+            maxWidth: "100%", // optional
+            alignSelf: "flex-start",
+            color: "#5c4033",
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "0.9rem",
+            letterSpacing: "0.5px",
+            background: "#f3eee9",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            cursor: "pointer"
           }}
         >
           {showCatalogHelp
             ? "Hide catalog help"
             : "Click here to know how to use the Hivaa's Product Catalog"}
-        </div>
+        </button>
+
       </div>
 
       {/* Catalog Help Paragraph - Styled Box */}
       {showCatalogHelp && (
         <div
           style={{
-            marginTop: "0.5rem",
-            padding: "1rem",
-            backgroundColor: "#f5eee7", // light brown background
-            borderRadius: "5px",
-            fontSize: "14px",
-            maxWidth: "600px",
-            lineHeight: "1.5",
-            fontStyle: "italic",
-            color: "#3b2a1e",
+            display: "inline-block",
+            padding: "4px 5px",
+            maxWidth: "100%", // optional
+            alignSelf: "flex-start",
+            color: "#5c4033",
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "0.9rem",
+            letterSpacing: "0.5px",
+            background: "#f3eee9",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            cursor: "pointer"
           }}
         >
           You can use the filters at the top to narrow down products based on your preferences.
@@ -127,56 +131,69 @@ function App() {
 
       {message && <div style={{ color: "green", marginBottom: "10px" }}>{message}</div>}
 
-      {wishlist.length > 0 && (
-        <div style={{ marginTop: "2rem", textAlign: "center" }}>
-          <button
-            onClick={() => setShowWishlist(!showWishlist)}
-            style={{
-              backgroundColor: "#6e4c3b", // dark brown
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              borderRadius: "8px",
-              marginBottom: "12px",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
-            }}
-          >
-            {showWishlist ? "Hide Wishlist" : `Click here to view your Wishlist - (${wishlist.length})`}
-          </button>
+      {/* Product List */}
+      <ProductList
+        products={products}
+        wishlist={wishlist}
+        addToWishlist={addToWishlist}
+        removeFromWishlist={removeFromWishlist}
+      />
 
+      {/* Floating Wishlist Button & Panel */}
+      {wishlist.length > 0 && (
+        <>
           {showWishlist && (
             <div
               style={{
+                position: "fixed",
+                bottom: "80px",
+                right: "20px",
+                width: "300px",
+                maxHeight: "400px",
+                overflowY: "auto",
+                backgroundColor: "#f3eee9",
                 border: "1px solid #ccc",
                 borderRadius: "10px",
-                padding: "1.2rem",
-                backgroundColor: "#f3eee9",
-                maxWidth: "600px",
-                margin: "0 auto"
+                padding: "1rem",
+                zIndex: 1000,
+                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)"
               }}
             >
+              <h4 style={{ marginTop: 0 }}>My Wishlist</h4>
               {wishlist.map((item) => (
                 <div
                   key={item.product_code}
                   style={{
                     border: "1px solid #ddd",
-                    padding: "10px",
-                    marginBottom: "10px",
+                    padding: "8px",
+                    marginBottom: "8px",
                     borderRadius: "5px",
                     backgroundColor: "#fffbe8"
                   }}
                 >
-                  <strong>{item.product_code}</strong>: {item.description} (₹{item.price})<br />
-                  <span style={{ fontSize: "0.9rem", color: "#555" }}>
+                  <strong>{item.product_code}</strong>: {item.description}<br />
+                  <span style={{ fontSize: "0.85rem", color: "#555" }}>
                     Sizes: {item.selectedSizes.join(", ")}
                   </span>
+                  <div>
+                    <button
+                      onClick={() => removeFromWishlist(item)}
+                      style={{
+                        marginTop: "5px",
+                        backgroundColor: "#9b3d3d",
+                        color: "white",
+                        border: "none",
+                        padding: "4px 8px",
+                        borderRadius: "4px",
+                        fontSize: "12px",
+                        cursor: "pointer"
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ))}
-
-              {/* WhatsApp Button Inside Dropdown */}
               <button
                 onClick={() => {
                   const messageLines = wishlist.map((item) => {
@@ -185,41 +202,56 @@ function App() {
                   const message =
                     "Hi, I'm interested in the following products:\n" + messageLines.join("\n");
                   const encodedMessage = encodeURIComponent(message);
-                  const phoneNumber = "918073879674"; // Replace with your WhatsApp number
+                  const phoneNumber = "918073879674";
                   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
                   window.open(whatsappUrl, "_blank");
                 }}
                 style={{
-                  marginTop: "1rem",
-                  backgroundColor: "#6e4c3b", // WhatsApp green
+                  marginTop: "10px",
+                  backgroundColor: "#25D366",
                   color: "white",
-                  padding: "10px 18px",
+                  padding: "8px 14px",
                   border: "none",
-                  fontSize: "15px",
-                  fontWeight: "bold",
-                  cursor: "pointer",
                   borderRadius: "6px",
-                  display: "inline-flex",
+                  fontWeight: "bold",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
                   alignItems: "center",
                   gap: "8px"
                 }}
               >
-                <FaWhatsapp size={18} color="white" />
-                Send Wishlist to WhatsApp
+                <FaWhatsapp size={16} />
+                Send All to WhatsApp
               </button>
             </div>
           )}
-        </div>
+
+          {/* Floating Wishlist Toggle Button */}
+          <button
+            onClick={() => setShowWishlist(!showWishlist)}
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              backgroundColor: "#6e4c3b",
+              color: "white",
+              padding: "12px 18px",
+              borderRadius: "30px",
+              border: "none",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+              fontWeight: "bold",
+              fontSize: "14px",
+              zIndex: 1000,
+              cursor: "pointer"
+            }}
+          >
+            ❤️Your Wishlist ({wishlist.length})
+          </button>
+        </>
       )}
 
 
-      {/* Product List */}
-      <ProductList
-        products={products}
-        wishlist={wishlist}
-        addToWishlist={addToWishlist}
-        removeFromWishlist={removeFromWishlist}
-      />
     </div>
   );
 }

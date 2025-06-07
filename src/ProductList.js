@@ -4,7 +4,9 @@ import ProductCard from "./ProductCard";
 
 const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
-function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  }) {
+function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ Loading state
   const [sortOption, setSortOption] = useState("none");
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -24,6 +26,29 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const recommendedProducts = products.slice(0, 5); // first 5 products as recommended (customize as you want)
+  const clearAllFilters = () => {
+    setSelectedSizes([]);
+    setSelectedTypes([]);
+    setKeyword("");
+    setSortOption("none");
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("https://hivaas-backend-api.onrender.com/api/products");
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     let filtered = products.filter((product) => {
@@ -82,12 +107,23 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
       if (dropdownRefTypes.current && !dropdownRefTypes.current.contains(event.target)) {
         setIsTypeDropdownOpen(false);
       }
+      if (dropdownRefSort.current && !dropdownRefSort.current.contains(event.target)) {
+        setIsSortDropdownOpen(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center", fontSize: "1.2rem", color: "#6e4c3b" }}>
+        Loading products... Please wait. Our boutique is getting ready ✨
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -107,16 +143,18 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
           <button
             onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
             style={{
-              padding: "8px 11px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-              fontSize: "14px",
-              cursor: "pointer",
-              marginBottom: "1rem",
-              marginRight: "10px",
-              backgroundColor: "#bdafa6",
-              fontWeight: "bold",
-              color: "#3b2a1e"
+              textAlign: "center",
+              marginBottom: "1.5rem",
+              color: "#5c4033",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "0.9rem",
+              letterSpacing: "0.5px",
+              background: "#f3eee9",
+              padding: "0.1rem 0.2rem",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              display: "inline-block",
+              cursor: "pointer"
             }}
           >
             Sort by Price: {sortOption === "none" ? "None" : sortOption === "highToLow" ? "High to Low" : "Low to High"}{" "}
@@ -174,16 +212,18 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
           <button
             onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
             style={{
-                padding: "8px 11px",
-                borderRadius: "5px",
-                border: "1px solid #ccc",
-                fontSize: "14px",
-                cursor: "pointer",
-                marginBottom: "1rem",
-                marginRight: "10px",
-                backgroundColor: "#bdafa6",
-                fontWeight: "bold",
-                color: "#3b2a1e"
+                textAlign: "center",
+                marginBottom: "1.5rem",
+                color: "#5c4033",
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "0.9rem",
+                letterSpacing: "0.5px",
+                background: "#f3eee9",
+                padding: "0.1rem 0.2rem",
+                borderRadius: "8px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                display: "inline-block",
+                cursor: "pointer"
             }}
             >
 
@@ -230,16 +270,18 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
         <button
             onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
             style={{
-                padding: "8px 11px",
-                borderRadius: "5px",
-                border: "1px solid #ccc",
-                fontSize: "14px",
-                cursor: "pointer",
-                marginBottom: "1rem",
-                marginRight: "10px",
-                backgroundColor: "#bdafa6",
-                fontWeight: "bold",
-                color: "#3b2a1e"
+                textAlign: "center",
+                marginBottom: "1.5rem",
+                color: "#5c4033",
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "0.9rem",
+                letterSpacing: "0.5px",
+                background: "#f3eee9",
+                padding: "0.1rem 0.2rem",
+                borderRadius: "8px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                display: "inline-block",
+                cursor: "pointer"
             }}
             >
 
@@ -290,24 +332,80 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             style={{
-              padding: "8px 11px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-              fontSize: "14px",
-              minWidth: "200px",
-              marginBottom: "1rem",
-              marginRight: "10px",
-              backgroundColor: "#bdafa6",
-              fontWeight: "bold",
-              color: "#3b2a1e",
-              outline: "none",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+              color: "#5c4033",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "0.9rem",
+              letterSpacing: "0.5px",
+              background: "#f3eee9",
+              padding: "0.1rem 0.2rem",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              display: "inline-block",
               cursor: "text"
             }}
           />
         </div>
-
+        <button
+          onClick={clearAllFilters}
+          style={{
+            textAlign: "center",
+              marginBottom: "1.5rem",
+              color: "#5c4033",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "0.9rem",
+              letterSpacing: "0.5px",
+              background: "#f3eee9",
+              padding: "0.1rem 0.2rem",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              display: "inline-block",
+              cursor: "pointer"
+          }}
+        >
+          Clear All Filters
+        </button>
       </div>
+      {(selectedSizes.length > 0 || selectedTypes.length > 0 || keyword) && (
+        <div style={{ marginTop: "0.5rem", textAlign: "center", fontWeight: "bold" }}>
+          {selectedSizes.length > 0 && (
+            <span style={{ margin: "0 6px" }}>
+              Size: {selectedSizes.join(", ")}
+            </span>
+          )}
+          {selectedTypes.length > 0 && (
+            <span style={{ margin: "0 6px" }}>
+              Type: {selectedTypes.join(", ")}
+            </span>
+          )}
+          {keyword && (
+            <span style={{ margin: "0 6px" }}>
+              Keyword: {keyword}
+            </span>
+          )}
+        </div>
+      )}
 
+      {filteredProducts.length > 0 && (
+        <div
+          style={{
+            textAlign: "center",
+            marginBottom: "1.5rem",
+            color: "#5c4033",
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "1.1rem",
+            letterSpacing: "0.5px",
+            background: "#f3eee9",
+            padding: "0.1rem 0.7rem",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            display: "inline-block",
+          }}
+        >
+          Showing <span style={{ fontWeight: "bold" }}>{filteredProducts.length}</span> products
+        </div>
+      )}
 
       <div
         className="product-list"
@@ -398,7 +496,6 @@ function ProductList({ products, wishlist, addToWishlist, removeFromWishlist  })
           </div>
         )}
       </div>
-    );
     </div>
   );
 }
