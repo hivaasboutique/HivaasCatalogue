@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductList from "./ProductList";
-import { FaWhatsapp } from 'react-icons/fa';  
+import { FaWhatsapp } from 'react-icons/fa'; 
+import Header from "./Header";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -9,7 +10,10 @@ function App() {
   const [showWishlist, setShowWishlist] = useState(false); // 👈 Toggle for dropdown
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [showCatalogHelp, setShowCatalogHelp] = useState(false);
-
+  const [keyword, setKeyword] = React.useState(""); // New state for keyword search
+  const [selectedSizes, setSelectedSizes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [sortOption, setSortOption] = useState("none");
 
   useEffect(() => {
     fetch("https://hivaas-backend-api.onrender.com/api/products")
@@ -37,97 +41,25 @@ function App() {
     setTimeout(() => setMessage(""), 2000);
   };
 
+  const clearAllFilters = () => {
+    setKeyword("");
+    setSelectedSizes([]);
+    setSelectedTypes([]);
+    setSortOption("none");
+  };
+
+
   return (
     <div className="App" style={{ padding: "1rem" }}>
-      <img
-        src="/header.png"
-        alt="Hivaas Banner"
-        style={{ width: "100%", height: "auto", marginBottom: "1rem" }}
+      <Header
+        showSizeGuide={showSizeGuide}
+        setShowSizeGuide={setShowSizeGuide}
+        showCatalogHelp={showCatalogHelp}
+        setShowCatalogHelp={setShowCatalogHelp}
+        keyword={keyword}
+        setKeyword={setKeyword}
+        clearAllFilters={clearAllFilters}
       />
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "1rem" }}>
-        {/* Size Guide Toggle */}
-        <button
-          onClick={() => setShowSizeGuide(!showSizeGuide)}
-          style={{
-            display: "inline-block",
-            padding: "4px 5px",
-            maxWidth: "100%", // optional
-            alignSelf: "flex-start",
-            color: "#5c4033",
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "0.9rem",
-            letterSpacing: "0.5px",
-            background: "#f3eee9",
-            borderRadius: "8px",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            cursor: "pointer"
-          }}
-        >
-          {showSizeGuide
-            ? "Hide the size guide"
-            : "Click here to view the size guide for your reference"}
-        </button>
-
-        {showSizeGuide && (
-          <img
-            src="/size_guide.png"
-            alt="Size Guide"
-            style={{ maxWidth: "100%", height: "auto", marginBottom: "1rem" }}
-          />
-        )}
-
-        {/* How to Use the Catalog Toggle */}
-        <button
-          onClick={() => setShowCatalogHelp(!showCatalogHelp)}
-          style={{
-            display: "inline-block",
-            padding: "4px 5px",
-            maxWidth: "100%", // optional
-            alignSelf: "flex-start",
-            color: "#5c4033",
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "0.9rem",
-            letterSpacing: "0.5px",
-            background: "#f3eee9",
-            borderRadius: "8px",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            cursor: "pointer"
-          }}
-        >
-          {showCatalogHelp
-            ? "Hide catalog help"
-            : "Click here to know how to use the Hivaa's Product Catalog"}
-        </button>
-
-      </div>
-
-      {/* Catalog Help Paragraph - Styled Box */}
-      {showCatalogHelp && (
-        <div
-          style={{
-            display: "inline-block",
-            padding: "4px 5px",
-            maxWidth: "100%", // optional
-            alignSelf: "flex-start",
-            color: "#5c4033",
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "0.9rem",
-            letterSpacing: "0.5px",
-            background: "#f3eee9",
-            borderRadius: "8px",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            cursor: "pointer"
-          }}
-        >
-          You can use the filters at the top to narrow down products based on your preferences.
-          Be sure to select the size(s) you’re looking for in each product you like. You can click 
-          on a product image for a full screen view of that image. You can even choose multiple sizes
-          in the same product. If you like several products, add them to your wishlist and send the
-          entire wishlist to us via WhatsApp. You can also send a single product directly to WhatsApp. 
-          Happy shopping!
-        </div>
-      )}
-
 
       {message && <div style={{ color: "green", marginBottom: "10px" }}>{message}</div>}
 
@@ -137,6 +69,7 @@ function App() {
         wishlist={wishlist}
         addToWishlist={addToWishlist}
         removeFromWishlist={removeFromWishlist}
+        keyword={keyword}
       />
 
       {/* Floating Wishlist Button & Panel */}

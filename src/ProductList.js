@@ -4,13 +4,13 @@ import ProductCard from "./ProductCard";
 
 const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
-function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
+function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setKeyword}) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // ✅ Loading state
   const [sortOption, setSortOption] = useState("none");
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [keyword, setKeyword] = useState(""); // New state for keyword search
+  //const [keyword, setKeyword] = useState(""); // New state for keyword search
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false);
@@ -29,8 +29,8 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
   const clearAllFilters = () => {
     setSelectedSizes([]);
     setSelectedTypes([]);
-    setKeyword("");
     setSortOption("none");
+    setKeyword("")
     setCurrentPage(1);
   };
 
@@ -145,11 +145,11 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
             style={{
               textAlign: "center",
               marginBottom: "1.5rem",
-              color: "#5c4033",
+              color: "#000000",
               fontFamily: "'Playfair Display', serif",
               fontSize: "0.9rem",
               letterSpacing: "0.5px",
-              background: "#f3eee9",
+              background: "#ebd8e4",
               padding: "0.1rem 0.2rem",
               borderRadius: "8px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -214,11 +214,11 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
             style={{
                 textAlign: "center",
                 marginBottom: "1.5rem",
-                color: "#5c4033",
+                color: "#000000",
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "0.9rem",
                 letterSpacing: "0.5px",
-                background: "#f3eee9",
+                background: "#ebd8e4",
                 padding: "0.1rem 0.2rem",
                 borderRadius: "8px",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -272,11 +272,11 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
             style={{
                 textAlign: "center",
                 marginBottom: "1.5rem",
-                color: "#5c4033",
+                color: "#000000",
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "0.9rem",
                 letterSpacing: "0.5px",
-                background: "#f3eee9",
+                background: "#ebd8e4",
                 padding: "0.1rem 0.2rem",
                 borderRadius: "8px",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -322,50 +322,6 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
             </div>
           )}
         </div>
-
-        {/* Keyword search input */}
-        <div style={{ position: "relative" }}>
-          <input
-            type="text"
-            id="keywordSearch"
-            placeholder="🔍 Search by keyword"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            style={{
-              textAlign: "center",
-              marginBottom: "1.5rem",
-              color: "#5c4033",
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
-              background: "#f3eee9",
-              padding: "0.1rem 0.2rem",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              display: "inline-block",
-              cursor: "text"
-            }}
-          />
-        </div>
-        <button
-          onClick={clearAllFilters}
-          style={{
-            textAlign: "center",
-              marginBottom: "1.5rem",
-              color: "#5c4033",
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
-              background: "#f3eee9",
-              padding: "0.1rem 0.2rem",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              display: "inline-block",
-              cursor: "pointer"
-          }}
-        >
-          Clear All Filters
-        </button>
       </div>
       {(selectedSizes.length > 0 || selectedTypes.length > 0 || keyword) && (
         <div style={{ marginTop: "0.5rem", textAlign: "center", fontWeight: "bold" }}>
@@ -386,7 +342,7 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist  }) {
           )}
         </div>
       )}
-
+      
       {filteredProducts.length > 0 && (
         <div
           style={{
