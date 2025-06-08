@@ -352,7 +352,7 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
         </div>
       </div>
       {(selectedSizes.length > 0 || selectedTypes.length > 0 || keyword) && (
-        <div style={{ marginTop: "0.5rem", textAlign: "center", fontWeight: "bold" }}>
+        <div style={{ marginTop: "0.5rem", textAlign: "center", fontWeight: "bold", fontFamily: "'Playfair Display', serif"}}>
           {selectedSizes.length > 0 && (
             <span style={{ margin: "0 6px" }}>
               Size: {selectedSizes.join(", ")}
@@ -420,14 +420,17 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             {/* Pagination Controls */}
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "2rem", gap: "1rem" }}>
               <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                onClick={() => {setCurrentPage((prev) => Math.max(prev - 1, 1));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 disabled={currentPage === 1}
                 style={{
+                  fontFamily: "'Playfair Display', serif",
                   padding: "8px 16px",
                   borderRadius: "5px",
                   border: "1px solid #ccc",
-                  backgroundColor: currentPage === 1 ? "#eee" : "#bdafa6",
-                  color: "#3b2a1e",
+                  backgroundColor: currentPage === 1 ? "#d1a5c1" : "#962d5e",
+                  color: "white",
                   fontWeight: "bold",
                   cursor: currentPage === 1 ? "not-allowed" : "pointer",
                 }}
@@ -438,14 +441,17 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
                 Page {currentPage} of {totalPages}
               </span>
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                onClick={() => {setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 disabled={currentPage === totalPages}
                 style={{
+                  fontFamily: "'Playfair Display', serif",
                   padding: "8px 16px",
                   borderRadius: "5px",
                   border: "1px solid #ccc",
-                  backgroundColor: currentPage === totalPages ? "#eee" : "#bdafa6",
-                  color: "#3b2a1e",
+                  backgroundColor: currentPage === totalPages ? "#d1a5c1" : "#962d5e",
+                  color: "white",
                   fontWeight: "bold",
                   cursor: currentPage === totalPages ? "not-allowed" : "pointer",
                 }}
@@ -455,11 +461,12 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             </div>
           </>
         ) : (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", fontFamily: "'Playfair Display', serif", fontSize: "1.2rem" }}>
             <p>No products found for selected filters.</p>
             <h3>Recommended Products</h3>
             <div
               style={{
+                fontFamily: "'Playfair Display', serif",
                 display: "flex",
                 flexWrap: "wrap",
                 justifyContent: "center",
