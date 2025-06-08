@@ -11,9 +11,6 @@ function App() {
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [showCatalogHelp, setShowCatalogHelp] = useState(false);
   const [keyword, setKeyword] = React.useState(""); // New state for keyword search
-  const [selectedSizes, setSelectedSizes] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [sortOption, setSortOption] = useState("none");
 
   useEffect(() => {
     fetch("https://hivaas-backend-api.onrender.com/api/products")
@@ -41,12 +38,6 @@ function App() {
     setTimeout(() => setMessage(""), 2000);
   };
 
-  const clearAllFilters = () => {
-    setKeyword("");
-    setSelectedSizes([]);
-    setSelectedTypes([]);
-    setSortOption("none");
-  };
 
 
   return (
@@ -58,7 +49,6 @@ function App() {
         setShowCatalogHelp={setShowCatalogHelp}
         keyword={keyword}
         setKeyword={setKeyword}
-        clearAllFilters={clearAllFilters}
       />
 
       {message && <div style={{ color: "green", marginBottom: "10px" }}>{message}</div>}
@@ -78,13 +68,15 @@ function App() {
           {showWishlist && (
             <div
               style={{
+                fontFamily: "'Playfair Display', serif",
                 position: "fixed",
                 bottom: "80px",
                 right: "20px",
                 width: "300px",
                 maxHeight: "400px",
                 overflowY: "auto",
-                backgroundColor: "#f3eee9",
+                backgroundColor: "#962d5e",
+                color: "white",
                 border: "1px solid #ccc",
                 borderRadius: "10px",
                 padding: "1rem",
@@ -97,23 +89,26 @@ function App() {
                 <div
                   key={item.product_code}
                   style={{
+                    fontFamily: "'Playfair Display', serif",
                     border: "1px solid #ddd",
                     padding: "8px",
                     marginBottom: "8px",
                     borderRadius: "5px",
-                    backgroundColor: "#fffbe8"
+                    backgroundColor: "#fffbe8",
+                    color: "black"
                   }}
                 >
                   <strong>{item.product_code}</strong>: {item.description}<br />
-                  <span style={{ fontSize: "0.85rem", color: "#555" }}>
+                  <span style={{ fontSize: "0.85rem", color: "#555", fontFamily: "'Playfair Display', serif", }}>
                     Sizes: {item.selectedSizes.join(", ")}
                   </span>
                   <div>
                     <button
                       onClick={() => removeFromWishlist(item)}
                       style={{
+                        fontFamily: "'Playfair Display', serif",
                         marginTop: "5px",
-                        backgroundColor: "#9b3d3d",
+                        backgroundColor: "#962d5e",
                         color: "white",
                         border: "none",
                         padding: "4px 8px",
@@ -140,6 +135,7 @@ function App() {
                   window.open(whatsappUrl, "_blank");
                 }}
                 style={{
+                  fontFamily: "'Playfair Display', serif",
                   marginTop: "10px",
                   backgroundColor: "#25D366",
                   color: "white",
@@ -164,10 +160,11 @@ function App() {
           <button
             onClick={() => setShowWishlist(!showWishlist)}
             style={{
+              fontFamily: "'Playfair Display', serif",
               position: "fixed",
               bottom: "20px",
               right: "20px",
-              backgroundColor: "#6e4c3b",
+              backgroundColor: "#962d5e",
               color: "white",
               padding: "12px 18px",
               borderRadius: "30px",

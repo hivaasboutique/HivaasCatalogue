@@ -5,7 +5,12 @@ function Header({
   setShowCatalogHelp,
   keyword,
   setKeyword,
-  clearAllFilters,
+  selectedSizes,
+  setSelectedSizes,
+  selectedTypes,
+  setSelectedTypes,
+  sortOption,
+  setSortOption,
 }) {
   return (
     <>
@@ -26,18 +31,18 @@ function Header({
         }}
       >
         {/* Left side: Size Guide and User Guide */}
-        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
           {/* Size Guide Toggle */}
           <button
             onClick={() => setShowSizeGuide(!showSizeGuide)}
             style={{
               display: "inline-block",
-              padding: "4px 5px",
+              padding: "3px 3px",
               maxWidth: "100%",
               color: "#ffffff",
               fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
+              fontSize: "0.7rem",
+              letterSpacing: "0.3px",
               fontWeight: "bold",
               background: "#962d5e",
               borderRadius: "8px",
@@ -53,12 +58,12 @@ function Header({
             onClick={() => setShowCatalogHelp(!showCatalogHelp)}
             style={{
               display: "inline-block",
-              padding: "4px 5px",
+              padding: "3px 3px",
               maxWidth: "100%",
               color: "#ffffff",
               fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
+              fontSize: "0.7rem",
+              letterSpacing: "0.3px",
               fontWeight: "bold",
               background: "#962d5e",
               borderRadius: "8px",
@@ -71,7 +76,7 @@ function Header({
         </div>
 
         {/* Right side: search input and clear filters */}
-        <div style={{ marginLeft: "auto", display: "flex", gap: "10px" }}>
+        <div style={{ marginLeft: "auto", display: "flex", gap: "5px" }}>
           {/* Keyword search input */}
           <input
             type="text"
@@ -80,13 +85,14 @@ function Header({
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             style={{
+              width: "120px",
               textAlign: "center",
               color: "#000000",
               fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
+              fontSize: "0.7rem",
               letterSpacing: "0.5px",
               background: "#ebd8e4",
-              padding: "0.1rem 0.2rem",
+              padding: "3px 0.5px",//"0.1rem 0.2rem",
               borderRadius: "8px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               cursor: "text",
@@ -94,24 +100,6 @@ function Header({
             }}
           />
 
-          {/* Clear All Filters button */}
-          <button
-            onClick={clearAllFilters}
-            style={{
-              padding: "4px 8px",
-              color: "#ffffff",
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
-              fontWeight: "bold",
-              background: "#962d5e",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              cursor: "pointer",
-            }}
-          >
-            Clear Keyword Filter
-          </button>
         </div>
       </div>
 

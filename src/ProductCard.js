@@ -107,7 +107,8 @@ return (
           <button
             onClick={goPrev}
             style={{
-              backgroundColor: "#6e4c3b",
+              fontFamily: "'Playfair Display', serif",
+              backgroundColor: "#962d5e",
               color: "white",
               border: "none",
               padding: "6px 12px",
@@ -115,10 +116,10 @@ return (
               cursor: "pointer",
               fontWeight: "bold",
               marginRight: "10px",
-              transition: "background-color 0.3s ease",
+              transition: "background-color 0.2s ease",
             }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#d1a5c1"}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#962d5e"}
           >
             Prev
           </button>
@@ -128,7 +129,8 @@ return (
           <button
             onClick={goNext}
             style={{
-              backgroundColor: "#6e4c3b",
+              fontFamily: "'Playfair Display', serif",
+              backgroundColor: "#962d5e",
               color: "white",
               border: "none",
               padding: "6px 12px",
@@ -136,10 +138,10 @@ return (
               cursor: "pointer",
               fontWeight: "bold",
               marginLeft: "10px",
-              transition: "background-color 0.3s ease",
+              transition: "background-color 0.2s ease",
             }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#563d2e"}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#6e4c3b"}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#d1a5c1"}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#962d5e"}
           >
             Next
           </button>
@@ -158,13 +160,14 @@ return (
         marginTop: "1rem",
       }}
     >
-      <h3 style={{ fontSize: "1rem", marginTop: "0.8rem", color: "#3b2a1e" }}>{product.description}</h3>
+      <h3 style={{ fontSize: "1.2rem", marginTop: "0.7rem", color: "#3b2a1e", fontFamily: "'Playfair Display', serif" }}>{product.description}</h3>
       {isSoldOut && (
         <div
           style={{
+            fontFamily: "'Playfair Display', serif",
             color: "red",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: "1.5rem",
             marginTop: "8px",
             userSelect: "none",
           }}
@@ -172,12 +175,12 @@ return (
           Sold Out
         </div>
       )}
-      <p style={{ margin: "0.3rem 0", fontSize: "0.9rem" }}><strong>Product Code:</strong> {product.product_code}</p>
-      <p style={{ margin: "0.3rem 0", fontSize: "1rem" }}><strong>Price:</strong> ₹{product.price}</p>
-      <p style={{ margin: "0.3rem 0", fontSize: "0.9rem" }}><strong>Product Type:</strong> {product.type}</p>
+      <p style={{ margin: "0.1rem 0", fontSize: "1rem", fontFamily: "'Playfair Display', serif"}}><strong>Product Code:</strong> {product.product_code}</p>
+      <p style={{ margin: "0.1rem 0", fontSize: "1rem", fontFamily: "'Playfair Display', serif"}}><strong>Price:</strong> ₹{product.price}</p>
+      <p style={{ margin: "0.1rem 0", fontSize: "1rem", fontFamily: "'Playfair Display', serif" }}><strong>Product Type:</strong> {product.type}</p>
 
       {/* Size Selection */}
-      <div style={{ marginTop: "0.4rem", textAlign: "left" }}>
+      <div style={{ marginTop: "0.4rem", textAlign: "left", fontFamily: "'Playfair Display', serif" }}>
         <strong>Select Sizes:</strong>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "0.5rem" }}>
           {AVAILABLE_SIZES.map((size) => {
@@ -188,11 +191,17 @@ return (
               <label
                 key={size}
                 style={{
+                  textAlign: "center",
+                  marginBottom: "0.5rem",
+                  fontFamily: "'Playfair Display', serif",
+                  letterSpacing: "0.01px",
+                  background: "#ebd8e4",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   padding: "4px 6px",              // Reduced padding
-                  borderRadius: "15px",            // Slightly smaller pill shape
-                  border: isSelected ? "2px solid #6e4c3b" : "1px solid #ccc",
-                  backgroundColor: isAvailable ? (isSelected ? "#6e4c3b" : "#f8f4f1") : "#eae0da",
-                  color: isAvailable ? (isSelected ? "white" : "#3b2a1e") : "#a9a9a9",
+                  borderRadius: "10px",            // Slightly smaller pill shape
+                  border: isSelected ? "2px solid #962d5e" : "1px solid #ccc",
+                  backgroundColor: isAvailable ? (isSelected ? "#962d5e" : "#ebd8e4") : "#d1a5c1",
+                  color: isAvailable ? (isSelected ? "white" : "#3b2a1e") : "black",
                   cursor: isAvailable ? "pointer" : "not-allowed",
                   fontSize: "0.8rem",             // Smaller font
                   userSelect: "none",
@@ -221,15 +230,16 @@ return (
           onClick={handleWishlistClick}
           disabled={selectedSizes.length === 0} 
           style={{
-            padding: "8px 11px",
-            borderRadius: "5px",
+            padding: "5px 9px",
+            borderRadius: "10px",
             border: "1px solid #ccc",
+            fontFamily: "'Playfair Display', serif",
             fontSize: "15px",
             cursor: selectedSizes.length === 0 ? "not-allowed" : "pointer",
-            backgroundColor: selectedSizes.length === 0 ? "#e0d6cf" : "#bdafa6",  
-            color: "#3b2a1e",              
+            backgroundColor: selectedSizes.length === 0 ? "#d1a5c1" : "#962d5e",  
+            color: "black",              
             fontWeight: "bold",
-            marginBottom: "10px",  // space between buttons
+            marginBottom: "5px",  // space between buttons
             width: "fit-content",
             boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
             opacity: selectedSizes.length === 0 ? 0.6 : 1,
@@ -251,12 +261,13 @@ return (
             window.open(whatsappUrl, "_blank");
           }}
           style={{
-            backgroundColor: selectedSizes.length === 0 ? "#e0d6cf" : "#6e4c3b",
-            padding: "6px 10px",
-            borderRadius: "5px",
+            fontFamily: "'Playfair Display', serif",
+            backgroundColor: selectedSizes.length === 0 ? "#d1a5c1" : "#962d5e",
+            padding: "4px 6px",
+            borderRadius: "10px",
             border: "1px solid #ccc",
             fontSize: "14px",
-            color: "white",
+            color: "black",
             fontWeight: "bold",
             cursor: selectedSizes.length === 0 ? "not-allowed" : "pointer",
             opacity: selectedSizes.length === 0 ? 0.6 : 1,
@@ -264,17 +275,17 @@ return (
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "6px",
+            gap: "3px",
             width: "fit-content"
           }}
         >
-          <FaWhatsapp color="#25D366" size={18} />
+          <FaWhatsapp color="#0f9642" size={20} />
           Send to WhatsApp
         </button>
 
         {/* Instruction message */}
         {selectedSizes.length === 0 && (
-          <small style={{ color: "#6e4c3b", marginTop: "8px", textAlign: "center", fontStyle: "italic" }}>
+          <small style={{ color: "#962d5e", marginTop: "8px", textAlign: "center",fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}>
             Select at least one size to add the product to the wishlist or to send it to us on WhatsApp.
           </small>
         )}

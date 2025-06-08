@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProductCard from "./ProductCard";
 
-
 const AVAILABLE_SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
 function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setKeyword}) {
@@ -26,13 +25,7 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const recommendedProducts = products.slice(0, 5); // first 5 products as recommended (customize as you want)
-  const clearAllFilters = () => {
-    setSelectedSizes([]);
-    setSelectedTypes([]);
-    setSortOption("none");
-    setKeyword("")
-    setCurrentPage(1);
-  };
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -130,12 +123,12 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
       {/* Filter Controls - Centered */}
       <div
         style={{
-          margin: "1rem 0",
+          margin: "0.5rem 0",
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",
           flexWrap: "wrap",
-          gap: "1rem",
+          gap: "0.2rem",
         }}
       >
         {/* Sort by Price */}
@@ -144,66 +137,67 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
             style={{
               textAlign: "center",
-              marginBottom: "1.5rem",
+              marginBottom: "0.5rem",
               color: "#000000",
               fontFamily: "'Playfair Display', serif",
-              fontSize: "0.9rem",
-              letterSpacing: "0.5px",
+              fontSize: "0.8rem",
+              letterSpacing: "0.01px",
               background: "#ebd8e4",
-              padding: "0.1rem 0.2rem",
+              padding: "0.1rem 0.1rem",
               borderRadius: "8px",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               display: "inline-block",
               cursor: "pointer"
             }}
           >
-            Sort by Price: {sortOption === "none" ? "None" : sortOption === "highToLow" ? "High to Low" : "Low to High"}{" "}
+            Sort by Price 
             {isSortDropdownOpen ? "▲" : "▼"}
           </button>
 
           {isSortDropdownOpen && (
-            <div
-              style={{
-                position: "absolute",
-                top: "110%",
-                left: 0,
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-                zIndex: 100,
-                padding: "0.5rem",
-                borderRadius: "4px"
-              }}
-            >
-              <div
-                style={{ cursor: "pointer", marginBottom: "0.25rem" }}
-                onClick={() => {
-                  setSortOption("none");
-                  setIsSortDropdownOpen(false);
-                }}
-              >
-                None
-              </div>
-              <div
-                style={{ cursor: "pointer", marginBottom: "0.25rem" }}
-                onClick={() => {
-                  setSortOption("highToLow");
-                  setIsSortDropdownOpen(false);
-                }}
-              >
-                High to Low
-              </div>
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setSortOption("lowToHigh");
-                  setIsSortDropdownOpen(false);
-                }}
-              >
-                Low to High
-              </div>
-            </div>
-          )}
+          <div
+            style={{
+              position: "absolute",
+              top: "110%",
+              left: 0,
+              border: "1px solid #d1b3c4",
+              backgroundColor: "#fff0f6",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
+              zIndex: 100,
+              padding: "0.5rem 0",
+              borderRadius: "10px",
+              minWidth: "140px",
+              fontFamily: "'Playfair Display', serif",
+            }}
+          >
+            {["None", "High to Low", "Low to High"].map((label, idx) => {
+              const value = label === "None" ? "none" : label === "High to Low" ? "highToLow" : "lowToHigh";
+              return (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    setSortOption(value);
+                    setIsSortDropdownOpen(false);
+                  }}
+                  style={{
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                    backgroundColor: sortOption === value ? "#f3d8e2" : "transparent",
+                    color: "#3b2a1e",
+                    fontSize: "0.85rem",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.target.style.backgroundColor = "#f3d8e2")}
+                  onMouseLeave={(e) =>
+                    (e.target.style.backgroundColor = sortOption === value ? "#f3d8e2" : "transparent")
+                  }
+                >
+                  {label}
+                </div>
+              );
+            })}
+          </div>
+        )}
         </div>
 
 
@@ -213,13 +207,13 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             onClick={() => setIsSizeDropdownOpen(!isSizeDropdownOpen)}
             style={{
                 textAlign: "center",
-                marginBottom: "1.5rem",
+                marginBottom: "0.5rem",
                 color: "#000000",
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "0.9rem",
-                letterSpacing: "0.5px",
+                fontSize: "0.8rem",
+                letterSpacing: "0.01px",
                 background: "#ebd8e4",
-                padding: "0.1rem 0.2rem",
+                padding: "0.1rem 0.1rem",
                 borderRadius: "8px",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                 display: "inline-block",
@@ -234,35 +228,52 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             <div
               style={{
                 position: "absolute",
-                top: "110%",
+                top: "100%",
                 left: 0,
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                border: "1px solid #d1b3c4",
+                backgroundColor: "#fff0f6",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
                 zIndex: 100,
-                padding: "0.5rem",
-                borderRadius: "4px",
-                maxHeight: "200px",
+                padding: "0.2rem",
+                borderRadius: "15px",
+                maxHeight: "190px",
                 overflowY: "auto",
+                minWidth: "100px",
+                fontFamily: "'Playfair Display', serif",
               }}
             >
               {AVAILABLE_SIZES.map((size) => (
                 <label
                   key={size}
-                  style={{ display: "block", cursor: "pointer", marginBottom: "0.25rem" }}
+                  style={{
+                    display: "block",
+                    cursor: "pointer",
+                    marginBottom: "0.2rem",
+                    padding: "2px 10px",
+                    backgroundColor: selectedSizes.includes(size) ? "#f3d8e2" : "transparent",
+                    borderRadius: "6px",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f3d8e2")}
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = selectedSizes.includes(size)
+                      ? "#f3d8e2"
+                      : "transparent")
+                  }
                 >
                   <input
                     type="checkbox"
                     value={size}
                     checked={selectedSizes.includes(size)}
                     onChange={() => toggleSize(size)}
-                    style={{ marginRight: "6px" }}
+                    style={{ marginRight: "8px" }}
                   />
                   {size}
                 </label>
               ))}
             </div>
           )}
+
         </div>
 
         {/* Product Type dropdown */}
@@ -271,13 +282,13 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
             style={{
                 textAlign: "center",
-                marginBottom: "1.5rem",
+                marginBottom: "0.5rem",
                 color: "#000000",
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "0.9rem",
-                letterSpacing: "0.5px",
+                fontSize: "0.8rem",
+                letterSpacing: "0.01px",
                 background: "#ebd8e4",
-                padding: "0.1rem 0.2rem",
+                padding: "0.1rem 0.1rem",
                 borderRadius: "8px",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                 display: "inline-block",
@@ -292,22 +303,38 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
             <div
               style={{
                 position: "absolute",
-                top: "110%",
+                top: "100%",
                 left: 0,
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                border: "1px solid #d1b3c4",
+                backgroundColor: "#fff0f6",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
                 zIndex: 100,
                 padding: "0.5rem",
-                borderRadius: "4px",
+                borderRadius: "15px",
                 maxHeight: "200px",
                 overflowY: "auto",
+                minWidth: "120px",
+                fontFamily: "'Playfair Display', serif",
               }}
             >
               {uniqueTypes.map((type) => (
                 <label
                   key={type}
-                  style={{ display: "block", cursor: "pointer", marginBottom: "0.25rem" }}
+                  style={{
+                    display: "block",
+                    cursor: "pointer",
+                    marginBottom: "0.25rem",
+                    padding: "6px 10px",
+                    backgroundColor: selectedTypes.includes(type) ? "#f3d8e2" : "transparent",
+                    borderRadius: "6px",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f3d8e2")}
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = selectedTypes.includes(type)
+                      ? "#f3d8e2"
+                      : "transparent")
+                  }
                 >
                   <input
                     type="checkbox"
@@ -321,6 +348,7 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
               ))}
             </div>
           )}
+
         </div>
       </div>
       {(selectedSizes.length > 0 || selectedTypes.length > 0 || keyword) && (
@@ -347,12 +375,12 @@ function ProductList({wishlist, addToWishlist, removeFromWishlist, keyword, setK
         <div
           style={{
             textAlign: "center",
-            marginBottom: "1.5rem",
-            color: "#5c4033",
+            marginBottom: "0rem",
+            color: "#ffffff",
             fontFamily: "'Playfair Display', serif",
-            fontSize: "1.1rem",
+            fontSize: "0.9rem",
             letterSpacing: "0.5px",
-            background: "#f3eee9",
+            background: "#962d5e",
             padding: "0.1rem 0.7rem",
             borderRadius: "8px",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
